@@ -2,11 +2,84 @@
 <html>
 <head>
   <title>kraft.ie</title>
+
+  <style type="text/css" media="screen">
+    @font-face {
+      font-family: MC;
+      src: url("/mc.otf") format("opentype");
+    }
+    body {
+      font-family: MC;
+    }
+    h1 {
+      font-size: 70px;
+      border: solid 10px black;
+      line-height: 42px;
+      padding: 20px 10px 10px 10px;
+    }
+
+    .blinking-cursor {
+      font-weight: 100;
+      /*font-size: 70px;*/
+      -webkit-animation: 0.7s blink step-end infinite;
+      -moz-animation: 0.7s blink step-end infinite;
+      -ms-animation: 0.7s blink step-end infinite;
+      -o-animation: 0.7s blink step-end infinite;
+      animation: 0.7s blink step-end infinite;
+    }
+
+    @keyframes "blink" {
+      from, to {
+        color: transparent;
+      }
+      50% {
+        color: black;
+      }
+    }
+
+    @-moz-keyframes blink {
+      from, to {
+        color: transparent;
+      }
+      50% {
+        color: black;
+      }
+    }
+
+    @-webkit-keyframes "blink" {
+      from, to {
+        color: transparent;
+      }
+      50% {
+        color: black;
+      }
+    }
+
+    @-ms-keyframes "blink" {
+      from, to {
+        color: transparent;
+      }
+      50% {
+        color: black;
+      }
+    }
+
+    @-o-keyframes "blink" {
+      from, to {
+        color: transparent;
+      }
+      50% {
+        color: black;
+      }
+    }
+  </style>
 </head>
 <body>
   <img src="/logo.png" alt="Kraft.ie Logo">
-  <p>Scraic</p>
-  <p><strong>kraft.ie</strong> is a <a href="https://mcapi.us/server/status?ip=kraft.ie">minecraft server.</a></p>
+  <h1>
+    kraft.ie<span class="blinking-cursor">_</span>
+  </h1>
+  <p> is a <a href="https://mcapi.us/server/status?ip=kraft.ie">minecraft server.</a></p>
   <!-- <img src="https://mcapi.us/server/image?ip=kraft.ie" alt="Kraft.ie Logo"> -->
 </body>
 </html>
