@@ -3,7 +3,17 @@
 <head>
   <title>kraft.ie</title>
 
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/png" href="/logo.png" />
+
   <style type="text/css" media="screen">
+    body {
+      margin: 10px;
+    }
+    #logo {
+      margin-bottom: 5px;
+    }
     @font-face {
       font-family: MC;
       src: url("/mc.otf") format("opentype");
@@ -14,11 +24,28 @@
     h1 {
       font-size: 70px;
       border: solid 10px black;
-      line-height: 42px;
+      line-height: 50px;
       padding: 20px 10px 10px 10px;
+      position: relative;
+      margin: 0 0 5px 0;
+      cursor: pointer;
+    }
+    h2 {
+      margin: 30px 0 5px 0;
+    }
+    p#copied, p#is-a {
+      margin: 0;
+      font-size: 20px;
+    }
+    pre {
+      font-size: 20px;
+    }
+    .hidden {
+      display: none;
     }
 
     .blinking-cursor {
+      position: relative;
       font-weight: 100;
       /*font-size: 70px;*/
       -webkit-animation: 0.7s blink step-end infinite;
@@ -26,6 +53,7 @@
       -ms-animation: 0.7s blink step-end infinite;
       -o-animation: 0.7s blink step-end infinite;
       animation: 0.7s blink step-end infinite;
+      left: -2px;
     }
 
     @keyframes "blink" {
@@ -36,7 +64,6 @@
         color: black;
       }
     }
-
     @-moz-keyframes blink {
       from, to {
         color: transparent;
@@ -45,7 +72,6 @@
         color: black;
       }
     }
-
     @-webkit-keyframes "blink" {
       from, to {
         color: transparent;
@@ -54,7 +80,6 @@
         color: black;
       }
     }
-
     @-ms-keyframes "blink" {
       from, to {
         color: transparent;
@@ -63,7 +88,6 @@
         color: black;
       }
     }
-
     @-o-keyframes "blink" {
       from, to {
         color: transparent;
@@ -75,11 +99,76 @@
   </style>
 </head>
 <body>
-  <img src="/logo.png" alt="Kraft.ie Logo">
-  <h1>
-    kraft.ie<span class="blinking-cursor">_</span>
+  <img src="/logo.png" alt="Kraft.ie" id="logo">
+  <h1 id="address-wrap">
+    <span id="address">kraft.ie</span><span class="blinking-cursor">_</span>
   </h1>
-  <p> is a <a href="https://mcapi.us/server/status?ip=kraft.ie">minecraft server.</a></p>
+  <p id="copied" class="hidden"><strong>Copied.</strong> Paste into Minecraft Multiplayer!</p>
+  <p id="is-a"> is a minecraft server. Click^</p>
+
+  <h2>About</h2>
+  <ul>
+    <li>Survival/PVP</li>
+    <li>Lock chests, furnaces and other containers</li>
+    <li>Claim land to protect your base!</li>
+    <li>Discord server + integration</li>
+  </ul>
+
+  <h2>Keep it online!</h2>
+  <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+    <input type="hidden" name="cmd" value="_donations" />
+    <input type="hidden" name="business" value="tcdcreator@gmail.com" />
+    <input type="hidden" name="item_name" value="kraft hosting" />
+    <input type="hidden" name="currency_code" value="EUR" />
+    <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
+    <img alt="" border="0" src="https://www.paypal.com/en_IE/i/scr/pixel.gif" width="1" height="1" />
+  </form>
+
+  <div>
+    <h2>Status</h2>
+    <ul id="status-list"></ul>
+  </div>
+
+  <h2>Links</h2>
+  <ul>
+    <li><a href="https://mcapi.us/server/status?ip=kraft.ie">MC API</a></li>
+    <li><a href="https://namemc.com/server/kraft.ie">NameMC</a></li>
+  </ul>
+
+  <script type="text/javascript" src="/minecraft-text.js"></script>
+  <script type="text/javascript">
+    const addressWrap = document.querySelector("#address-wrap")
+    const address = addressWrap.querySelector("#address")
+    addressWrap.addEventListener("click", e => {
+      window.getSelection().selectAllChildren(address)
+      document.execCommand("copy")
+
+      document.querySelector("#copied").classList.remove("hidden")
+      document.querySelector("#is-a").classList.add("hidden")
+    })
+
+    const statusList = document.querySelector("#status-list")
+    const addToStatusList = html => {
+      const newLI = document.createElement('li')
+      newLI.innerHTML = html
+      // newLI.appendChild(document.createTextNode(txt))
+      statusList.appendChild(newLI)
+    }
+
+    fetch("https://mcapi.us/server/status?ip=kraft.ie").then(res => res.json()).then(data => {
+      console.log(data)
+      if (data.online) {
+        addToStatusList("Online!")
+        addToStatusList(`${data.server.name} (supports 1.14.2)`)
+        addToStatusList(`${data.players.now} / ${data.players.max}`)
+        addToStatusList(`Last checked ${(new Date(Number(data.last_updated) * 1000)).toISOString()}`)
+        addToStatusList(`MOTD <pre>${MinecraftTextJS.toHTML(data.motd)}</pre>`)
+      } else {
+        addToStatusList("Offline")
+      }
+    })
+  </script>
+
   <!-- <img src="https://mcapi.us/server/image?ip=kraft.ie" alt="Kraft.ie Logo"> -->
 </body>
 </html>
