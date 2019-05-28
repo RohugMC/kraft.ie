@@ -159,12 +159,14 @@
       console.log(data)
       if (data.online) {
         addToStatusList("Online!")
-        addToStatusList(`${data.server.name} (supports 1.14.2)`)
+        addToStatusList(`${data.server.name}`)
         addToStatusList(`${data.players.now} / ${data.players.max}`)
-        addToStatusList(`Last checked ${(new Date(Number(data.last_updated) * 1000)).toISOString()}`)
         addToStatusList(`MOTD <pre>${MinecraftTextJS.toHTML(data.motd)}</pre>`)
       } else {
         addToStatusList("Offline")
+      }
+      if (data.last_updated) {
+        addToStatusList(`Last checked ${(new Date(Number(data.last_updated) * 1000)).toISOString()}`)
       }
     })
   </script>
