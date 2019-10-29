@@ -56,7 +56,7 @@
       left: -2px;
     }
 
-    @keyframes "blink" {
+    @keyframes blink {
       from, to {
         color: transparent;
       }
@@ -72,7 +72,7 @@
         color: black;
       }
     }
-    @-webkit-keyframes "blink" {
+    @-webkit-keyframes blink {
       from, to {
         color: transparent;
       }
@@ -80,7 +80,7 @@
         color: black;
       }
     }
-    @-ms-keyframes "blink" {
+    @-ms-keyframes blink {
       from, to {
         color: transparent;
       }
@@ -88,7 +88,7 @@
         color: black;
       }
     }
-    @-o-keyframes "blink" {
+    @-o-keyframes blink {
       from, to {
         color: transparent;
       }
@@ -103,77 +103,11 @@
   <h1 id="address-wrap">
     <span id="address">kraft.ie</span><span class="blinking-cursor">_</span>
   </h1>
-  <p id="copied" class="hidden"><strong>Copied.</strong><br />Paste into Minecraft Multiplayer!</p>
-  <p id="is-a"> is a minecraft server. Click^</p>
+  <p id="is-a"> <s>is</s> was a minecraft server.</p>
 
-  <h2>About</h2>
-  <ul>
-    <li>Survival/PVP</li>
-    <li>Lock chests, furnaces and other containers</li>
-    <li>Claim land to protect your base!</li>
-    <li>Discord server + integration</li>
-  </ul>
+  <h3>We plan to be back very soon!</h3>
 
-  <h2>Keep it online!</h2>
-  <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-    <input type="hidden" name="cmd" value="_donations" />
-    <input type="hidden" name="business" value="tcdcreator@gmail.com" />
-    <input type="hidden" name="item_name" value="kraft hosting" />
-    <input type="hidden" name="currency_code" value="EUR" />
-    <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
-    <img alt="" border="0" src="https://www.paypal.com/en_IE/i/scr/pixel.gif" width="1" height="1" />
-  </form>
-
-  <h2>Vote</h2>
-  <a href="https://minecraftservers.biz/servers/144122/" target="_blank"><img src="https://minecraftservers.biz/vote2.gif" width="88" height="53" border="0"></a>
-
-  <div>
-    <h2>Status</h2>
-    <ul id="status-list"></ul>
-  </div>
-
-  <h2>Links</h2>
-  <ul>
-    <li><a href="https://mcapi.us/server/status?ip=kraft.ie">MC API</a></li>
-    <li><a href="https://namemc.com/server/kraft.ie">NameMC</a></li>
-  </ul>
-
-  <script type="text/javascript" src="/minecraft-text.js"></script>
-  <script type="text/javascript">
-    const addressWrap = document.querySelector("#address-wrap")
-    const address = addressWrap.querySelector("#address")
-    addressWrap.addEventListener("click", e => {
-      window.getSelection().selectAllChildren(address)
-      document.execCommand("copy")
-
-      document.querySelector("#copied").classList.remove("hidden")
-      document.querySelector("#is-a").classList.add("hidden")
-    })
-
-    const statusList = document.querySelector("#status-list")
-    const addToStatusList = html => {
-      const newLI = document.createElement('li')
-      newLI.innerHTML = html
-      // newLI.appendChild(document.createTextNode(txt))
-      statusList.appendChild(newLI)
-    }
-
-    fetch("https://mcapi.us/server/status?ip=kraft.ie").then(res => res.json()).then(data => {
-      console.log(data)
-      if (data.online) {
-        addToStatusList("Online!")
-        addToStatusList(`${data.server.name}`)
-        addToStatusList(`${data.players.now} / ${data.players.max}`)
-        addToStatusList(`MOTD <pre>${MinecraftTextJS.toHTML(data.motd)}</pre>`)
-      } else {
-        addToStatusList("Offline")
-      }
-      if (data.last_updated) {
-        addToStatusList(`Last checked ${(new Date(Number(data.last_updated) * 1000)).toISOString()}`)
-      }
-    })
-  </script>
-
+  
   <!-- <img src="https://mcapi.us/server/image?ip=kraft.ie" alt="Kraft.ie Logo"> -->
 </body>
 </html>
